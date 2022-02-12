@@ -1,0 +1,97 @@
+Database        : crn:v1:bluemix:public:dashdb-for-transactions:us-south:a/1ec072b9cb3b49898ef676173db47deb:975ad115-4dbd-44a1-9ba9-e85277ca8357::
+Host name       : db2-icd-prod-us-south-db-ywe5s-private-alb.db2.databases.appdomain.cloud                                                        
+Authorization Id: nht16821                                                                                                                        
+Run method      : JDBC                                                                                                                            
+Date            : Feb 12, 2022 1:07:41 PM                                                                                                         
+Status          : completed                                                                                                                       
+
+select distinct LAUNCH_SITE FROM SPACEXDATASET
+
+select * FROM SPACEXDATASET WHERE "LAUNCH_SITE" like 'CCA%' limit 5
+
+select sum(PAYLOAD_MASS__KG_) FROM SPACEXDATASET WHERE "CUSTOMER"= 'NASA (CRS)'
+
+select avg(PAYLOAD_MASS__KG_) FROM SPACEXDATASET WHERE "BOOSTER_VERSION"= 'F9 v1.1'
+
+select * FROM SPACEXDATASET WHERE "LANDING__OUTCOME"= 'Success (ground pad)' AND "MISSION_OUTCOME"= 'Success' ORDER BY DATE ASC LIMIT 1
+
+select BOOSTER_VERSION FROM SPACEXDATASET WHERE "LANDING__OUTCOME"= 'Success (drone ship)' AND "PAYLOAD_MASS__KG_" > 4000 AND "PAYLOAD_MASS__KG_" < 6000
+
+SELECT count(MISSION_OUTCOME) as Successes FROM SPACEXDATASET WHERE "MISSION_OUTCOME"= 'Success'
+
+SELECT count(MISSION_OUTCOME) as Failures FROM SPACEXDATASET WHERE "MISSION_OUTCOME"= 'Failure (in flight)'
+
+SELECT BOOSTER_VERSION From SPACEXDATASET where "PAYLOAD_MASS__KG_"=(select MAX(PAYLOAD_MASS__KG_) FROM SPACEXDATASET)
+
+SELECT BOOSTER_VERSION, LAUNCH_SITE FROM SPACEXDATASET where "LANDING__OUTCOME"= 'Failure (drone ship)' AND "DATE" like '2015%'
+
+select DISTINCT COUNT(LANDING__OUTCOME) AS Outcomes, LANDING__OUTCOME FROM SPACEXDATASET  WHERE DATE between '2010-06-04' and '2017-03-20' GROUP BY LANDING__OUTCOME
+
+
+
+=======================================================================================
+select distinct LAUNCH_SITE FROM SPACEXDATASET
+
+Run time (seconds): 0.023    
+Status            : succeeded
+
+=======================================================================================
+select * FROM SPACEXDATASET WHERE "LAUNCH_SITE" like 'CCA%' limit 5
+
+Run time (seconds): 0.015    
+Status            : succeeded
+
+=======================================================================================
+select sum(PAYLOAD_MASS__KG_) FROM SPACEXDATASET WHERE "CUSTOMER"= 'NASA (CRS)'
+
+Run time (seconds): 0.024    
+Status            : succeeded
+
+=======================================================================================
+select avg(PAYLOAD_MASS__KG_) FROM SPACEXDATASET WHERE "BOOSTER_VERSION"= 'F9 v1.1'
+
+Run time (seconds): 0.015    
+Status            : succeeded
+
+=======================================================================================
+select * FROM SPACEXDATASET WHERE "LANDING__OUTCOME"= 'Success (ground pad)' AND "MISSION_OUTCOME"= 'Success' ORDER BY DATE ASC LIMIT 1
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+select BOOSTER_VERSION FROM SPACEXDATASET WHERE "LANDING__OUTCOME"= 'Success (drone ship)' AND "PAYLOAD_MASS__KG_" > 4000 AND "PAYLOAD_MASS__KG_" < 6000
+
+Run time (seconds): 0.008    
+Status            : succeeded
+
+=======================================================================================
+SELECT count(MISSION_OUTCOME) as Successes FROM SPACEXDATASET WHERE "MISSION_OUTCOME"= 'Success'
+
+Run time (seconds): 0.010    
+Status            : succeeded
+
+=======================================================================================
+SELECT count(MISSION_OUTCOME) as Failures FROM SPACEXDATASET WHERE "MISSION_OUTCOME"= 'Failure (in flight)'
+
+Run time (seconds): 0.011    
+Status            : succeeded
+
+=======================================================================================
+SELECT BOOSTER_VERSION From SPACEXDATASET where "PAYLOAD_MASS__KG_"=(select MAX(PAYLOAD_MASS__KG_) FROM SPACEXDATASET)
+
+Run time (seconds): 0.011    
+Status            : succeeded
+
+=======================================================================================
+SELECT BOOSTER_VERSION, LAUNCH_SITE FROM SPACEXDATASET where "LANDING__OUTCOME"= 'Failure (drone ship)' AND "DATE" like '2015%'
+
+Run time (seconds): 0.008    
+Status            : succeeded
+
+=======================================================================================
+select DISTINCT COUNT(LANDING__OUTCOME) AS Outcomes, LANDING__OUTCOME FROM SPACEXDATASET  WHERE DATE between '2010-06-04' and '2017-03-20' GROUP BY LANDING__OUTCOME
+
+Run time (seconds): 0.011    
+Status            : succeeded
+
