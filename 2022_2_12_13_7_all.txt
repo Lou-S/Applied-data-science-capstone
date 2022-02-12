@@ -1,0 +1,181 @@
+Database        : crn:v1:bluemix:public:dashdb-for-transactions:us-south:a/1ec072b9cb3b49898ef676173db47deb:975ad115-4dbd-44a1-9ba9-e85277ca8357::
+Host name       : db2-icd-prod-us-south-db-ywe5s-private-alb.db2.databases.appdomain.cloud                                                        
+Authorization Id: nht16821                                                                                                                        
+Run method      : JDBC                                                                                                                            
+Date            : Feb 12, 2022 1:07:41 PM                                                                                                         
+Status          : completed                                                                                                                       
+
+select distinct LAUNCH_SITE FROM SPACEXDATASET
+
+select * FROM SPACEXDATASET WHERE "LAUNCH_SITE" like 'CCA%' limit 5
+
+select sum(PAYLOAD_MASS__KG_) FROM SPACEXDATASET WHERE "CUSTOMER"= 'NASA (CRS)'
+
+select avg(PAYLOAD_MASS__KG_) FROM SPACEXDATASET WHERE "BOOSTER_VERSION"= 'F9 v1.1'
+
+select * FROM SPACEXDATASET WHERE "LANDING__OUTCOME"= 'Success (ground pad)' AND "MISSION_OUTCOME"= 'Success' ORDER BY DATE ASC LIMIT 1
+
+select BOOSTER_VERSION FROM SPACEXDATASET WHERE "LANDING__OUTCOME"= 'Success (drone ship)' AND "PAYLOAD_MASS__KG_" > 4000 AND "PAYLOAD_MASS__KG_" < 6000
+
+SELECT count(MISSION_OUTCOME) as Successes FROM SPACEXDATASET WHERE "MISSION_OUTCOME"= 'Success'
+
+SELECT count(MISSION_OUTCOME) as Failures FROM SPACEXDATASET WHERE "MISSION_OUTCOME"= 'Failure (in flight)'
+
+SELECT BOOSTER_VERSION From SPACEXDATASET where "PAYLOAD_MASS__KG_"=(select MAX(PAYLOAD_MASS__KG_) FROM SPACEXDATASET)
+
+SELECT BOOSTER_VERSION, LAUNCH_SITE FROM SPACEXDATASET where "LANDING__OUTCOME"= 'Failure (drone ship)' AND "DATE" like '2015%'
+
+select DISTINCT COUNT(LANDING__OUTCOME) AS Outcomes, LANDING__OUTCOME FROM SPACEXDATASET  WHERE DATE between '2010-06-04' and '2017-03-20' GROUP BY LANDING__OUTCOME
+
+
+
+=======================================================================================
+select distinct LAUNCH_SITE FROM SPACEXDATASET
+
+Run time (seconds): 0.023    
+Status            : succeeded
+
+LAUNCH_SITE 
+------------
+CCAFS LC-40 
+CCAFS SLC-40
+KSC LC-39A  
+VAFB SLC-4E 
+
+
+=======================================================================================
+select * FROM SPACEXDATASET WHERE "LAUNCH_SITE" like 'CCA%' limit 5
+
+Run time (seconds): 0.015    
+Status            : succeeded
+
+DATE       TIME__UTC_ BOOSTER_VERSION LAUNCH_SITE PAYLOAD                                                       PAYLOAD_MASS__KG_ ORBIT     CUSTOMER        MISSION_OUTCOME LANDING__OUTCOME   
+---------- ---------- --------------- ----------- ------------------------------------------------------------- ----------------- --------- --------------- --------------- -------------------
+2010-06-04 18:45:00   F9 v1.0  B0003  CCAFS LC-40 Dragon Spacecraft Qualification Unit                                          0 LEO       SpaceX          Success         Failure (parachute)
+2010-12-08 15:43:00   F9 v1.0  B0004  CCAFS LC-40 Dragon demo flight C1, two CubeSats, barrel of Brouere cheese                 0 LEO (ISS) NASA (COTS) NRO Success         Failure (parachute)
+2012-05-22 07:44:00   F9 v1.0  B0005  CCAFS LC-40 Dragon demo flight C2                                                       525 LEO (ISS) NASA (COTS)     Success         No attempt         
+2012-10-08 00:35:00   F9 v1.0  B0006  CCAFS LC-40 SpaceX CRS-1                                                                500 LEO (ISS) NASA (CRS)      Success         No attempt         
+2013-03-01 15:10:00   F9 v1.0  B0007  CCAFS LC-40 SpaceX CRS-2                                                                677 LEO (ISS) NASA (CRS)      Success         No attempt         
+
+
+=======================================================================================
+select sum(PAYLOAD_MASS__KG_) FROM SPACEXDATASET WHERE "CUSTOMER"= 'NASA (CRS)'
+
+Run time (seconds): 0.024    
+Status            : succeeded
+
+1    
+-----
+45596
+
+
+=======================================================================================
+select avg(PAYLOAD_MASS__KG_) FROM SPACEXDATASET WHERE "BOOSTER_VERSION"= 'F9 v1.1'
+
+Run time (seconds): 0.015    
+Status            : succeeded
+
+1   
+----
+2928
+
+
+=======================================================================================
+select * FROM SPACEXDATASET WHERE "LANDING__OUTCOME"= 'Success (ground pad)' AND "MISSION_OUTCOME"= 'Success' ORDER BY DATE ASC LIMIT 1
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+DATE       TIME__UTC_ BOOSTER_VERSION LAUNCH_SITE PAYLOAD                                  PAYLOAD_MASS__KG_ ORBIT CUSTOMER MISSION_OUTCOME LANDING__OUTCOME    
+---------- ---------- --------------- ----------- ---------------------------------------- ----------------- ----- -------- --------------- --------------------
+2015-12-22 01:29:00   F9 FT B1019     CCAFS LC-40 OG2 Mission 2  11 Orbcomm-OG2 satellites              2034 LEO   Orbcomm  Success         Success (ground pad)
+
+
+=======================================================================================
+select BOOSTER_VERSION FROM SPACEXDATASET WHERE "LANDING__OUTCOME"= 'Success (drone ship)' AND "PAYLOAD_MASS__KG_" > 4000 AND "PAYLOAD_MASS__KG_" < 6000
+
+Run time (seconds): 0.008    
+Status            : succeeded
+
+BOOSTER_VERSION
+---------------
+F9 FT B1022    
+F9 FT B1026    
+F9 FT  B1021.2 
+F9 FT  B1031.2 
+
+
+=======================================================================================
+SELECT count(MISSION_OUTCOME) as Successes FROM SPACEXDATASET WHERE "MISSION_OUTCOME"= 'Success'
+
+Run time (seconds): 0.010    
+Status            : succeeded
+
+SUCCESSES
+---------
+       99
+
+
+=======================================================================================
+SELECT count(MISSION_OUTCOME) as Failures FROM SPACEXDATASET WHERE "MISSION_OUTCOME"= 'Failure (in flight)'
+
+Run time (seconds): 0.011    
+Status            : succeeded
+
+FAILURES
+--------
+       1
+
+
+=======================================================================================
+SELECT BOOSTER_VERSION From SPACEXDATASET where "PAYLOAD_MASS__KG_"=(select MAX(PAYLOAD_MASS__KG_) FROM SPACEXDATASET)
+
+Run time (seconds): 0.011    
+Status            : succeeded
+
+BOOSTER_VERSION
+---------------
+F9 B5 B1048.4  
+F9 B5 B1049.4  
+F9 B5 B1051.3  
+F9 B5 B1056.4  
+F9 B5 B1048.5  
+F9 B5 B1051.4  
+F9 B5 B1049.5  
+F9 B5 B1060.2  
+F9 B5 B1058.3  
+F9 B5 B1051.6  
+F9 B5 B1060.3  
+F9 B5 B1049.7  
+
+
+=======================================================================================
+SELECT BOOSTER_VERSION, LAUNCH_SITE FROM SPACEXDATASET where "LANDING__OUTCOME"= 'Failure (drone ship)' AND "DATE" like '2015%'
+
+Run time (seconds): 0.008    
+Status            : succeeded
+
+BOOSTER_VERSION LAUNCH_SITE
+--------------- -----------
+F9 v1.1 B1012   CCAFS LC-40
+F9 v1.1 B1015   CCAFS LC-40
+
+
+=======================================================================================
+select DISTINCT COUNT(LANDING__OUTCOME) AS Outcomes, LANDING__OUTCOME FROM SPACEXDATASET  WHERE DATE between '2010-06-04' and '2017-03-20' GROUP BY LANDING__OUTCOME
+
+Run time (seconds): 0.011    
+Status            : succeeded
+
+OUTCOMES LANDING__OUTCOME      
+-------- ----------------------
+       3 Controlled (ocean)    
+       5 Failure (drone ship)  
+       2 Failure (parachute)   
+      10 No attempt            
+       1 Precluded (drone ship)
+       5 Success (drone ship)  
+       3 Success (ground pad)  
+       2 Uncontrolled (ocean)  
+
+
